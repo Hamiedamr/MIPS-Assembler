@@ -1,4 +1,4 @@
-# Assembler v0.1
+# Assembler v0.1.1
 class Assembler:
     def __init__(self, in_file, out_file):
         # Call Praser functions here
