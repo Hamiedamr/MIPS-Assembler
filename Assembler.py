@@ -1,17 +1,10 @@
 # Assembler v0.1
 class Assembler:
-    def __init__(self, in_file,out_file):
-        #Call Praser functions here
-        try:
-            self.R_parser(in_file,out_file)
-        except ValueError:
-            print('Error occurrs!')
-    #R-type parser function
-    def R_parser(self,in_file,out_file):
-        f = open(in_file, 'r') #read .asm file
-        o = open(out_file,'w+')
-        opCode = '000000'
-        registers_map = {
+    def __init__(self, in_file, out_file):
+        # Call Praser functions here
+        f = open(in_file, 'r')  # read .asm file
+        o = open(out_file, 'w+')
+        self.registers_map = {
             '$0': '00000',
             '$at': '00001',
             '$v0': '00010',
@@ -45,6 +38,15 @@ class Assembler:
             '$fp': '11110',
             '$ra': '11111'
         }
+        try:
+            self.R_parser(f, o)
+        except ValueError:
+            print('Error occurrs!')
+    # R-type parser function
+
+    def R_parser(self, f, o):
+        opCode = '000000'
+
         func_map = {'add': '100000', 'sub': '100010', 'and': '100100',
                     'or': '100101', 'slt': '101010', 'sll': '000000', 'srl': '000010'}
         if f.mode == 'r':
@@ -56,20 +58,21 @@ class Assembler:
                     registers = {
                         'rs': '00000', 'shamt': '{0:05b}'.format(int(registers[2])), 'rd': registers[0], 'rt': registers[1]}
                     instruction = '{}{}{}{}{}{}'.format(
-                        opCode,  registers['rs'], registers_map[registers['rt']], registers_map[registers['rd']], registers['shamt'], func_map[func])
+                        opCode,  registers['rs'], self.registers_map[registers['rt']], self.registers_map[registers['rd']], registers['shamt'], func_map[func])
                 else:
                     registers = {
                         'rs': registers[1], 'rt': registers[2], 'rd': registers[0], 'shamt': '00000'}
                     instruction = '{}{}{}{}{}{}'.format(
-                        opCode,  registers_map[registers['rs']], registers_map[registers['rt']], registers_map[registers['rd']], registers['shamt'], func_map[func])
+                        opCode,  self.registers_map[registers['rs']], self.registers_map[registers['rt']], self.registers_map[registers['rd']], registers['shamt'], func_map[func])
 
                 o.write(instruction+'\n')
+    # def I_parser(file,in_file,out_file):
 
 
 def main():
     file = 'mips1.asm'
     out = 'out.txt'
-    assembler = Assembler(file,out)
+    assembler = Assembler(file, out)
 
 
 if __name__ == '__main__':
