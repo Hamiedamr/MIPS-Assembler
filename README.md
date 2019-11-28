@@ -1,4 +1,12 @@
-# MIPS-Assembler
-<li>Put mips assembly code in mips1.asm file</li>
-<li>Run python Assembler.py</li>
-<li>Open out.txt find the binary representation to your assembly code :)</li>
+# MipsSimulator
+GUI assembler and MIPS simulator 
+
+***Requirments:***
+1. Python 3.5 or heigher
+2. PyQt5:
+```
+pip install pyqt5
+pip install pyqt5-tools
+```
+***How to run:***
+- run python simulator.py
