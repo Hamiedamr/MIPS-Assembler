@@ -119,8 +119,13 @@ class Assembler:
         if func != 'sw' and func != 'lw':
             registers = line[line.find(" "):len(line)].replace(" ","").split(',')
             #registers = line[line.find(" ")+1:len(line)].split(',')
-            registers = {'rs': registers[0], 'rt': registers[1],
+            if(int(registers[2]) < 0):
+                registers = {'rs': registers[0], 'rt': registers[1],
                          'val': '{}'.format(self.TwosComplement(int(registers[2])))}
+            else:
+                registers = {'rs': registers[0], 'rt': registers[1],
+                         'val': '{0:016b}'.format(int(registers[2]))}
+
             instruction = '{}{}{}{}'.format(
                 self.i_map[func],  self.registers_map[registers['rt']], self.registers_map[registers['rs']], registers['val'])
         else:
